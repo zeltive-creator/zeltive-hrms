@@ -44,7 +44,7 @@ if (document.getElementById('registerForm')) {
 
             if (response.ok) {
                 // Registration successful
-                alert('Registration successful! Redirecting to login...');
+                // alert('Registration successful! Redirecting to login...');
                 window.location.href = 'login.html';
             } else {
                 // Show error
@@ -153,3 +153,4 @@ if (window.location.pathname.includes('dashboard.html')) {
         window.location.href = 'login.html';
     }
 }
+
