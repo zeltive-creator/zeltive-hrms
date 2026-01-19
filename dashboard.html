@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Zeltive HRMS</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar">
+            <div class="sidebar-header">
+                <h1 class="brand-title">
+                    <span class="brand-white">Zel</span><span class="brand-lime">tive</span>
+                    <span class="brand-subtitle">HRMS</span>
+                </h1>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-page="overview">
+                    <span class="nav-icon icon-chart"></span>
+                    <span class="nav-text">Overview</span>
+                </a>
+                <a href="#" class="nav-item" data-page="attendance">
+                    <span class="nav-icon icon-users"></span>
+                    <span class="nav-text">Attendance</span>
+                </a>
+                <a href="#" class="nav-item" data-page="records">
+                    <span class="nav-icon icon-list"></span>
+                    <span class="nav-text">Records</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="dashboard-main">
+            <!-- Top Header -->
+            <header class="dashboard-header">
+                <div class="header-right">
+                    <div class="user-profile">
+                        <div class="profile-avatar">
+                            <span id="userInitial">U</span>
+                        </div>
+                        <div class="profile-info">
+                            <span class="profile-name" id="headerUserName">User</span>
+                            <span class="profile-role" id="headerUserRole">Employee</span>
+                        </div>
+                        <button id="logoutBtn" class="logout-btn" title="Logout">
+                            <i class="fa fa-sign-out"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <main class="dashboard-content">
+                <!-- Overview Page -->
+                <div id="overview-page" class="page-content active">
+                    <!-- Summary Cards -->
+                    <div class="summary-cards">
+                    <div class="summary-card">
+                        <div class="card-icon" style="background-color: rgba(102, 255, 0, 0.1);">
+                            <span class="icon-calendar" style="color: var(--neon-green);"></span>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-menu">⋯</div>
+                            <div class="card-value" id="totalDays">0</div>
+                            <div class="card-label">Total Days</div>
+                        </div>
+                    </div>
+                    
+                    <div class="summary-card">
+                        <div class="card-icon" style="background-color: rgba(102, 255, 0, 0.1);">
+                            <span class="icon-check" style="color: var(--neon-green);"></span>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-menu">⋯</div>
+                            <div class="card-value" id="presentDays">0</div>
+                            <div class="card-label">Present Days</div>
+                        </div>
+                    </div>
+                    
+                    <div class="summary-card">
+                        <div class="card-icon" style="background-color: rgba(255, 255, 0, 0.1);">
+                            <span class="icon-clock" style="color: #ffff00;"></span>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-menu">⋯</div>
+                            <div class="card-value" id="lateDays">0</div>
+                            <div class="card-label">Late Days</div>
+                        </div>
+                    </div>
+                    
+                    <div class="summary-card">
+                        <div class="card-icon" style="background-color: rgba(255, 68, 68, 0.1);">
+                            <span class="icon-x" style="color: #ff4444;"></span>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-menu">⋯</div>
+                            <div class="card-value" id="absentDays">0</div>
+                            <div class="card-label">Absent Days</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Cards Row -->
+                <div class="action-cards-row">
+                    <!-- Attendance Actions Card -->
+                    <div class="action-card">
+                        <h3 class="card-title">Attendance Actions</h3>
+                        <div id="offDayMessage" class="off-day-message"></div>
+                        <div class="action-buttons">
+                            <button id="checkInBtn" class="btn btn-primary btn-large">Check-In</button>
+                            <button id="checkOutBtn" class="btn btn-primary btn-large">Check-Out</button>
+                        </div>
+                        <div id="attendanceMessage" class="attendance-message"></div>
+                    </div>
+
+                    <!-- Working Hours Info Card -->
+                    <div class="info-card-modern">
+                        <h3 class="card-title">Working Hours</h3>
+                        <div class="working-hours-info">
+                            <p><strong>Office Time:</strong> 10:00 AM – 6:00 PM</p>
+                            <p><strong>Late after:</strong> 10:15 AM</p>
+                            <p><strong>Early checkout:</strong> Before 6:00 PM</p>
+                            <p><strong>Time Zone:</strong> Pakistan Time</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calendar and Clock Row -->
+                <div class="clock-calendar-row">
+                    <!-- Analog Clock Card -->
+                    <div class="clock-card">
+                        <h3 class="card-title">Time Clock</h3>
+                        <div class="analog-clock-container">
+                            <canvas id="clockCanvas" width="300" height="300" class="clock-canvas">
+                                Sorry, your browser does not support canvas.
+                            </canvas>
+                            <div class="digital-time-display">
+                                <div id="clock-time-12h" class="clock-time-12h">12:00:00 PM</div>
+                                <div id="clock-date" class="clock-date">Monday, January 1, 2024</div>
+                                <div id="clock-timezone" class="clock-timezone">Pakistan Time (PKT)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Calendar Card -->
+                    <div class="calendar-card-small">
+                        <h3 class="card-title">Calendar</h3>
+                        <div id="calendar-container" class="calendar-container-small"></div>
+                    </div>
+                </div>
+
+                <!-- Filters and Table Section -->
+                <div class="table-section-modern">
+                    <div class="table-header">
+                        <h3 class="card-title">Attendance Records</h3>
+                        <div class="filter-buttons">
+                            <button class="filter-btn active" data-filter="today">Today</button>
+                            <button class="filter-btn" data-filter="week">This Week</button>
+                            <button class="filter-btn" data-filter="month">This Month</button>
+                            <button class="filter-btn" data-filter="all">All Records</button>
+                        </div>
+                    </div>
+                    <div class="table-card-modern">
+                        <div class="table-container">
+                            <table id="attendanceTable" class="attendance-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Name</th>
+                                        <th>Day Name</th>
+                                        <th>Check-In</th>
+                                        <th>Check-Out</th>
+                                        <th>Status</th>
+                                        <th>Working Hours</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="attendanceTableBody">
+                                    <!-- Table rows will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+                <!-- Attendance Page -->
+                <div id="attendance-page" class="page-content">
+                    <div class="page-header">
+                        <h2 class="page-title">Attendance Management</h2>
+                        <p class="page-subtitle">Check in and check out for your daily attendance</p>
+                    </div>
+
+                    <div class="action-cards-row">
+                        <!-- Attendance Actions Card -->
+                        <div class="action-card">
+                            <h3 class="card-title">Check-In / Check-Out</h3>
+                            <div id="offDayMessageAttendance" class="off-day-message"></div>
+                            <div class="action-buttons">
+                                <button id="checkInBtnAttendance" class="btn btn-primary btn-large">Check-In</button>
+                                <button id="checkOutBtnAttendance" class="btn btn-primary btn-large">Check-Out</button>
+                            </div>
+                            <div id="attendanceMessageAttendance" class="attendance-message"></div>
+                        </div>
+
+                        <!-- Working Hours Info Card -->
+                        <div class="info-card-modern">
+                            <h3 class="card-title">Working Hours</h3>
+                            <div class="working-hours-info">
+                                <p><strong>Office Time:</strong> 10:00 AM – 6:00 PM</p>
+                                <p><strong>Late after:</strong> 10:15 AM</p>
+                                <p><strong>Early checkout:</strong> Before 6:00 PM</p>
+                                <p><strong>Time Zone:</strong> Pakistan Time</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Today's Status Card -->
+                    <div class="status-card">
+                        <h3 class="card-title">Today's Status</h3>
+                        <div id="todayStatusContent" class="status-content">
+                            <p>Loading today's attendance status...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Records Page -->
+                <div id="records-page" class="page-content">
+                    <div class="page-header">
+                        <h2 class="page-title">Attendance Records</h2>
+                        <p class="page-subtitle">View your complete attendance history</p>
+                    </div>
+
+                    <!-- Filters and Table Section -->
+                    <div class="table-section-modern">
+                        <div class="table-header">
+                            <h3 class="card-title">All Records</h3>
+                            <div class="filter-buttons">
+                                <button class="filter-btn-records active" data-filter="today">Today</button>
+                                <button class="filter-btn-records" data-filter="week">This Week</button>
+                                <button class="filter-btn-records" data-filter="month">This Month</button>
+                                <button class="filter-btn-records" data-filter="all">All Records</button>
+                            </div>
+                        </div>
+                        <div class="table-card-modern">
+                            <div class="table-container">
+                                <table id="recordsTable" class="attendance-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Name</th>
+                                            <th>Day Name</th>
+                                            <th>Check-In</th>
+                                            <th>Check-Out</th>
+                                            <th>Status</th>
+                                            <th>Working Hours</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="recordsTableBody">
+                                        <!-- Table rows will be populated by JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/attendance.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

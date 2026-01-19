@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Zeltive HRMS</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="auth-page">
+    <div class="container">
+        <div class="auth-card">
+            <div class="auth-logo">
+                <h1 class="logo-text">
+                    <span class="brand-white">Zel</span><span class="brand-lime">tive</span>
+                    <span class="logo-hrms">HRMS</span>
+                </h1>
+            </div>
+            <h1 class="form-title">Create Account</h1>
+            <p class="form-subtitle">Join Zeltive HRMS platform.</p>
+            
+            <form id="registerForm" class="auth-form">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required placeholder="Enter your email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="password" name="password" required placeholder="Enter password">
+                        <span class="password-toggle" id="passwordToggle">
+                            <span class="eye-icon eye-open"></span>
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="position">Position</label>
+                        <select id="position" name="position" required>
+                            <option value="">Select position</option>
+                            <option value="Designer">Designer</option>
+                            <option value="Developer">Developer</option>
+                            <option value="Marketing Specialist">Marketing Specialist</option>
+                            <option value="Video Editor">Video Editor</option>
+                            <option value="System Manager">System Manager</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="companyCode">Company Code</label>
+                        <input type="text" id="companyCode" name="companyCode" required placeholder="Enter company code">
+                    </div>
+                </div>
+                
+                <div id="errorMessage" class="error-message"></div>
+                
+                <button type="submit" class="btn btn-primary">Create Account</button>
+                
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="login.html">Log in</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        // Password visibility toggle
+        const passwordToggle = document.getElementById('passwordToggle');
+        const passwordInput = document.getElementById('password');
+        const eyeIcon = passwordToggle.querySelector('.eye-icon');
+        
+        if (passwordToggle && passwordInput) {
+            passwordToggle.addEventListener('click', () => {
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    eyeIcon.classList.remove('eye-open');
+                    eyeIcon.classList.add('eye-closed');
+                } else {
+                    passwordInput.type = 'password';
+                    eyeIcon.classList.remove('eye-closed');
+                    eyeIcon.classList.add('eye-open');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
