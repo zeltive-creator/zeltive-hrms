@@ -450,10 +450,89 @@ async function handleCheckOutForAttendance() {
     }, 1000);
 }
 
+// Initialize Mobile Menu Toggle
+function initMobileMenu() {
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const dashboardSidebar = document.getElementById('dashboardSidebar');
+    const mobileOverlay = document.getElementById('mobileOverlay');
+    const sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
+    
+    if (!mobileMenuToggle || !dashboardSidebar || !mobileOverlay) {
+        return;
+    }
+    
+    // Toggle sidebar
+    function toggleSidebar() {
+        const isActive = dashboardSidebar.classList.contains('active');
+        dashboardSidebar.classList.toggle('active');
+        mobileOverlay.classList.toggle('active');
+        
+        // Prevent body scroll when menu is open on mobile
+        if (window.innerWidth <= 768) {
+            if (!isActive) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        }
+    }
+    
+    // Close sidebar function
+    function closeSidebar() {
+        dashboardSidebar.classList.remove('active');
+        mobileOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    
+    // Open sidebar
+    mobileMenuToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleSidebar();
+    });
+    
+    // Close sidebar button
+    if (sidebarCloseBtn) {
+        sidebarCloseBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeSidebar();
+        });
+    }
+    
+    // Close sidebar when clicking overlay
+    mobileOverlay.addEventListener('click', () => {
+        closeSidebar();
+    });
+    
+    // Close sidebar when clicking nav item on mobile
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => {
+        item.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                closeSidebar();
+            }
+        });
+    });
+    
+    // Close sidebar on window resize if desktop
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+            closeSidebar();
+        }
+    });
+    
+    // Close sidebar on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && dashboardSidebar.classList.contains('active')) {
+            closeSidebar();
+        }
+    });
+}
+
 // Initialize dashboard
 if (window.location.pathname.includes('dashboard.html')) {
     document.addEventListener('DOMContentLoaded', () => {
         loadUserProfile();
+        initMobileMenu();
         initNavigation();
         initSidebarActions();
         initAttendancePageButtons();
